@@ -1,0 +1,28 @@
+header h1 {
+    background: url("bg.jpg") left / auto 100% no-repeat, url("bg.jpg") right / auto 100% no-repeat;
+}
+
+.root {
+    font-size: larger;
+}
+
+img.main-image {
+    width: 300px;
+
+}
+img.additional-image {
+    width: 180px;
+}
+.justify-content {
+    justify-content: space-between !important;
+}
+
+#id_role {
+    display: flex;
+}
+
+.form-check {
+    margin-left: 2%;
+    padding-right: 2%;
+    padding-left: 0px !important;
+}

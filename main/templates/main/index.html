@@ -1,0 +1,50 @@
+{% extends "layout/basic.html" %}
+
+{% load thumbnail %}
+{% load static %}
+{% load bootstrap4 %}
+<!--Block-->
+{% block title %}Площадка для студентов и сотрудников ВУЗа{% endblock %}
+
+{% block content %}
+<div class="mb-2">
+    <h2>Новости</h2>
+    <!--Фильтр|поиск|сортировка-->
+    <h2 class="mb-2">{{ rubric }}</h2>
+    {% if newses %}
+    <ul class="list-unstyled">
+        {% for news in newses %}
+        <li class="media my-5 p-3 border">
+            {% url 'main:detail_news' rubric_pk=rubric.pk pk=news.pk as url %}
+            <a href="{{ url }}{{ all }}">
+                {% if news.image %}
+                <img class="mr-3" src="{% thumbnail news.image 'default' %}">
+                {% else %}
+                <img class="mr-3" src="{% static 'main/empty.jpg' %}">
+                {% endif %}
+            </a>
+            <div class="media-body">
+                <h3><a href="{{ url }}{{ all }}">
+                    {{ news.title }}</a></h3>
+                <div>{{ news.content }}</div>
+                <p class="text-right font-italic">{{ news.created_at }}</p>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <!--Показать еще (кнопка) -->
+</div>
+{% if request.user.is_authenticated %}
+<div class="mt-5">
+    <h2>Обращение к ректору</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ request.user.username }}
+        {{ request.user.email }}
+        {% bootstrap_form form layout='horizontal' %}
+        {% buttons submit='Опубликовать' %}{% endbuttons %}
+    </form>
+</div>
+{% endif %}
+{% endblock %}
